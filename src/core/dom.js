@@ -14,7 +14,7 @@ class Dom {
   }
 
   text(text) {
-    if (typeof text === 'string') {
+    if (typeof text !== 'undefined') {
       this.$el.textContent = text
       return this
     }
@@ -29,12 +29,12 @@ class Dom {
     return this
   }
 
-  on(eventType, callback, options) {
-    this.$el.addEventListener(eventType, callback, options)
+  on(eventType, callback) {
+    this.$el.addEventListener(eventType, callback)
   }
 
-  off(eventType, callback, options) {
-    this.$el.removeEventListener(eventType, callback, options)
+  off(eventType, callback) {
+    this.$el.removeEventListener(eventType, callback)
   }
 
   // node type Element
@@ -77,6 +77,13 @@ class Dom {
     })
   }
 
+  getStyles(styles = []) {
+    return styles.reduce((res, s) => {
+      res[s] = this.$el.style[s]
+      return res
+    }, {})
+  }
+
   id(parse) {
     if (parse) {
       const parsed = this.id().split(':')
@@ -91,6 +98,14 @@ class Dom {
   focus() {
     this.$el.focus()
     return this
+  }
+
+  attr(name, value) {
+    if (value) {
+      this.$el.setAttribute(name, value)
+      return this
+    }
+    return this.$el.getAttribute(name)
   }
 
   addClass(className) {
