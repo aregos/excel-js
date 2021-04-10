@@ -5,12 +5,17 @@ class Dom {
         : selector
   }
 
-  html(html = '') {
+  html(html) {
     if (typeof html === 'string') {
       this.$el.innerHTML = html
       return this
     }
     return this.$el.outerHTML.trim()
+  }
+
+  clear() {
+    this.html('')
+    return this
   }
 
   text(text) {
@@ -22,11 +27,6 @@ class Dom {
       return this.$el.value.trim()
     }
     return this.$el.textContent.trim()
-  }
-
-  clear() {
-    this.html('')
-    return this
   }
 
   on(eventType, callback) {
